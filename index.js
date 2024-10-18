@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const serverless = require("serverless-http");
+const router = express.Router();
 
 require("dotenv").config();
 
@@ -16,6 +18,10 @@ app.use(bodyParser.json());
 app.use("/", authRoutes);
 app.use("/playlists", playlistRoutes);
 
+app.use("/index", router);
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+module.exports.handler = serverless(app);
